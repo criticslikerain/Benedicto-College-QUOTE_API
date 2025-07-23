@@ -1,0 +1,40 @@
+{
+  "name": "benedicto-college-quote-api",
+  "version": "1.0.0",
+  "description": "A free JSON quote API with thousands of inspirational quotes for education, motivation, and inspiration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required - static site'",
+    "test": "node test-api.js",
+    "start": "netlify dev",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "quotes",
+    "api",
+    "education",
+    "motivation",
+    "inspiration",
+    "netlify",
+    "serverless",
+    "json-api",
+    "free-api"
+  ],
+  "author": "Benedicto College",
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/benedicto-college-quote-api",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/benedicto-college-quote-api.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

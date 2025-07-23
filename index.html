@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benedicto College Quote API</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            color: #2980b9;
+        }
+        
+        .intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .category-card {
+            background: #ecf0f1;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .endpoint {
+            background: #2c3e50;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 0.5rem 0;
+            display: inline-block;
+        }
+        
+        .example-url {
+            background: #34495e;
+            color: #ecf0f1;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            margin: 1rem 0;
+        }
+        
+        .response-example {
+            background: #27ae60;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 1rem 0;
+        }
+        
+        .demo-section {
+            background: #f1f2f6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        #demo-result {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Benedicto College Quote API</h1>
+        
+        <div class="intro">
+            <p>Welcome to our free JSON quote API! Access thousands of inspirational quotes across multiple categories.</p>
+        </div>
+
+        <h2>📋 Available Categories</h2>
+        <div class="categories">
+            <div class="category-card">
+                <strong>💪 Motivation</strong>
+                <p>Quotes to push you forward</p>
+            </div>
+            <div class="category-card">
+                <strong>👩‍🏫 Teachers</strong>
+                <p>Wisdom about teaching</p>
+            </div>
+            <div class="category-card">
+                <strong>🎓 Students</strong>
+                <p>Learning and growth quotes</p>
+            </div>
+            <div class="category-card">
+                <strong>📖 Education</strong>
+                <p>The power of knowledge</p>
+            </div>
+            <div class="category-card">
+                <strong>✨ Inspiration</strong>
+                <p>Life-changing thoughts</p>
+            </div>
+        </div>
+
+        <h2>🚀 API Usage</h2>
+        
+        <h3>Get Random Quote (Any Category)</h3>
+        <div class="endpoint">GET /.netlify/functions/random</div>
+        
+        <h3>Get Random Quote by Category</h3>
+        <div class="endpoint">GET /.netlify/functions/random?category=motivation</div>
+        
+        <h3>Example URLs</h3>
+        <div class="example-url">https://your-site.netlify.app/.netlify/functions/random</div>
+        <div class="example-url">https://your-site.netlify.app/.netlify/functions/random?category=teachers</div>
+
+        <h3> Response Format</h3>
+        <div class="response-example">{
+  "quote": "Teaching is the profession that creates all others.",
+  "author": "Unknown",
+  "category": "teachers"
+}</div>
+
+        <h2>🎮 Live Demo</h2>
+        <div class="demo-section">
+            <p>Try the API right here:</p>
+            <button onclick="fetchRandomQuote()">Get Random Quote</button>
+            <button onclick="fetchQuoteByCategory('motivation')">Motivation Quote</button>
+            <button onclick="fetchQuoteByCategory('teachers')">Teachers Quote</button>
+            <button onclick="fetchQuoteByCategory('students')">Students Quote</button>
+            <button onclick="fetchQuoteByCategory('education')">Education Quote</button>
+            <button onclick="fetchQuoteByCategory('inspiration')">Inspiration Quote</button>
+            
+            <div id="demo-result">Click a button above to fetch a quote!</div>
+        </div>
+
+        <h2> Error Handling</h2>
+        <p>Invalid category requests return a 400 status with available categories:</p>
+        <div class="response-example">{
+  "error": "Invalid category. Available categories: motivation, teachers, students, education, inspiration",
+  "availableCategories": ["motivation", "teachers", "students", "education", "inspiration"]
+}</div>
+
+        <div class="footer">
+            <p> Built for Benedicto College | Free to use | No API key required</p>
+            <p>Made with ❤️ using Netlify Functions</p>
+        </div>
+    </div>
+
+    <script>
+        async function fetchRandomQuote() {
+            const resultDiv = document.getElementById('demo-result');
+            resultDiv.textContent = 'Loading...';
+            
+            try {
+                const response = await fetch('/.netlify/functions/random');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.textContent = `Error: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.textContent = `Network Error: ${error.message}`;
+            }
+        }
+        
+        async function fetchQuoteByCategory(category) {
+            const resultDiv = document.getElementById('demo-result');
+            resultDiv.textContent = 'Loading...';
+            
+            try {
+                const response = await fetch(`/.netlify/functions/random?category=${category}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.textContent = `Error: ${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                resultDiv.textContent = `Network Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
