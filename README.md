@@ -1,4 +1,4 @@
-# 📚 Benedicto College Quote API
+# Benedicto College Quote API
 
 A free JSON quote API built with Netlify Functions, featuring thousands of inspirational quotes across multiple educational categories.
 
@@ -11,21 +11,8 @@ A free JSON quote API built with Netlify Functions, featuring thousands of inspi
 - **CORS enabled** for browser usage
 - **No API key required**
 
-## 📁 Project Structure
 
-```
-📁 project-root/
-├── index.html                 # Homepage with API docs and demo
-├── quotes.json               # JSON file with quotes by category
-├── netlify.toml              # Netlify configuration
-├── package.json              # Node.js dependencies
-├── README.md                 # This file
-└── netlify/
-    └── functions/
-        └── random.js         # Netlify Function for API endpoints
-```
-
-## 🔧 Local Development
+## Para Local Development
 
 1. **Install Netlify CLI** (if not already installed):
    ```bash
@@ -47,38 +34,7 @@ A free JSON quote API built with Netlify Functions, featuring thousands of inspi
    - Random quote: `http://localhost:8888/.netlify/functions/random`
    - Category quote: `http://localhost:8888/.netlify/functions/random?category=motivation`
 
-## 🌐 Deployment to Netlify
 
-### Option 1: GitHub Integration (Recommended)
-
-1. **Push to GitHub**:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/quote-api.git
-   git push -u origin main
-   ```
-
-2. **Connect to Netlify**:
-   - Go to [Netlify](https://netlify.com)
-   - Click "New site from Git"
-   - Connect your GitHub repository
-   - Build settings are automatically detected from `netlify.toml`
-   - Deploy!
-
-### Option 2: Netlify CLI
-
-1. **Login to Netlify**:
-   ```bash
-   netlify login
-   ```
-
-2. **Deploy**:
-   ```bash
-   netlify deploy --prod
-   ```
 
 ## 📄 API Response Format
 
@@ -90,7 +46,7 @@ A free JSON quote API built with Netlify Functions, featuring thousands of inspi
 }
 ```
 
-## 🗂️ Available Categories
+## Available Categories
 
 - **motivation** — Quotes to push you forward
 - **teachers** — Wisdom about teaching and educators
@@ -98,29 +54,29 @@ A free JSON quote API built with Netlify Functions, featuring thousands of inspi
 - **education** — The power of knowledge and learning
 - **inspiration** — Life-changing thoughts and ideas
 
-## 🔍 Example Usage
+## Example Usage
 
 ### JavaScript/Fetch
 ```javascript
-// Get random quote
+// kuha og random quote
 const response = await fetch('https://your-site.netlify.app/.netlify/functions/random');
 const quote = await response.json();
 
-// Get motivation quote
+// kuha og motivation quote
 const motivationResponse = await fetch('https://your-site.netlify.app/.netlify/functions/random?category=motivation');
 const motivationQuote = await motivationResponse.json();
 ```
 
 ### cURL
 ```bash
-# Random quote
+# random quote
 curl https://your-site.netlify.app/.netlify/functions/random
 
-# Category-specific quote
+# category specific quote
 curl "https://your-site.netlify.app/.netlify/functions/random?category=education"
 ```
 
-## ⚠️ Error Handling
+## rror Handling
 
 Invalid category requests return a 400 status:
 ```json
@@ -130,7 +86,7 @@ Invalid category requests return a 400 status:
 }
 ```
 
-## 📝 Adding More Quotes
+## Adding More Quotes
 
 To add more quotes, edit the `quotes.json` file:
 
@@ -142,17 +98,17 @@ To add more quotes, edit the `quotes.json` file:
 }
 ```
 
-## 🤝 Contributing
+## FYI Contributing
 
 1. Fork the repository
 2. Add your quotes to `quotes.json`
 3. Test locally with `netlify dev`
 4. Submit a pull request
 
-## 📜 License
+##License
 
 MIT License - feel free to use this API for any purpose!
 
-## 🎓 About
+## About
 
 Built for Benedicto College to provide free access to educational and inspirational quotes. Perfect for educational apps, motivation tools, and learning platforms.
