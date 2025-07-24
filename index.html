@@ -4,247 +4,767 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benedicto College Quote API</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-error: #ef4444;
+            --border-color: #2a2a2a;
+            --border-hover: #3a3a3a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            overflow-x: hidden;
         }
-        
+
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
         .container {
-            background: white;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
         }
-        
-        h1 {
-            color: #2c3e50;
+
+        .header {
             text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+        }
+
+        .logo {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
         }
-        
-        h2 {
-            color: #34495e;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        
-        h3 {
-            color: #2980b9;
+
+        .title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: slideInUp 0.8s ease-out;
         }
-        
-        .intro {
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .stat {
             text-align: center;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: #555;
         }
-        
-        .categories {
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 2rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .category-card {
-            background: #ecf0f1;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            border-left: 4px solid #3498db;
-        }
-        
-        .endpoint {
-            background: #2c3e50;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            margin: 0.5rem 0;
-            display: inline-block;
-        }
-        
-        .example-url {
-            background: #34495e;
-            color: #ecf0f1;
-            padding: 1rem;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-            margin: 1rem 0;
-        }
-        
-        .response-example {
-            background: #27ae60;
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            white-space: pre-wrap;
-            margin: 1rem 0;
-        }
-        
-        .demo-section {
-            background: #f1f2f6;
-            padding: 1.5rem;
-            border-radius: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
             margin: 2rem 0;
         }
-        
-        button {
-            background: #3498db;
+
+        .category-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-card:hover .category-icon {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: scale(1.1);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+            color: var(--accent-primary);
+            background: var(--bg-tertiary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .category-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .category-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .api-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .endpoint-group {
+            margin-bottom: 2rem;
+        }
+
+        .endpoint-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .endpoint {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--accent-primary);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin: 0.5rem 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .endpoint:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(4px);
+        }
+
+        .endpoint::after {
+            content: '📋';
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .endpoint:hover::after {
+            opacity: 1;
+        }
+
+        .code-block {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block.json {
+            color: var(--accent-success);
+        }
+
+        .code-block.url {
+            color: var(--accent-warning);
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .demo-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
-            margin: 0.5rem;
-            transition: background 0.3s;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
-        button:hover {
-            background: #2980b9;
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
         }
-        
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
         #demo-result {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 1rem;
-            border-radius: 5px;
-            margin-top: 1rem;
-            min-height: 100px;
-            font-family: 'Courier New', monospace;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            min-height: 120px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
             white-space: pre-wrap;
+            color: var(--text-secondary);
+            position: relative;
         }
-        
+
         .footer {
             text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid #ddd;
-            color: #666;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer p {
+            margin: 0.5rem 0;
+        }
+
+        .footer a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+            }
+        }
+
+        .loading {
+            color: var(--accent-primary);
+        }
+
+        .error {
+            color: var(--accent-error);
+        }
+
+        .success {
+            color: var(--accent-success);
         }
     </style>
 </head>
 <body>
+    <div class="background-pattern"></div>
+
     <div class="container">
-        <h1>📚 Benedicto College Quote API</h1>
-        
-        <div class="intro">
-            <p>Welcome to our free JSON quote API! Access thousands of inspirational quotes across multiple categories.</p>
-        </div>
+        <header class="header">
+            <h1 class="title">Quote API</h1>
+            <p class="subtitle">Access thousands of inspirational quotes across multiple categories with our free JSON API</p>
 
-        <h2>📋 Available Categories</h2>
-        <div class="categories">
-            <div class="category-card">
-                <strong>💪 Motivation</strong>
-                <p>Quotes to push you forward</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">600+</span>
+                    <span class="stat-label">Quotes</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Free</span>
+                </div>
             </div>
-            <div class="category-card">
-                <strong>👩‍🏫 Teachers</strong>
-                <p>Wisdom about teaching</p>
-            </div>
-            <div class="category-card">
-                <strong>🎓 Students</strong>
-                <p>Learning and growth quotes</p>
-            </div>
-            <div class="category-card">
-                <strong>📖 Education</strong>
-                <p>The power of knowledge</p>
-            </div>
-            <div class="category-card">
-                <strong>✨ Inspiration</strong>
-                <p>Life-changing thoughts</p>
-            </div>
-        </div>
+        </header>
 
-        <h2>🚀 API Usage</h2>
-        
-        <h3>Get Random Quote (Any Category)</h3>
-        <div class="endpoint">GET /.netlify/functions/random</div>
-        
-        <h3>Get Random Quote by Category</h3>
-        <div class="endpoint">GET /.netlify/functions/random?category=motivation</div>
-        
-        <h3>Example URLs</h3>
-        <div class="example-url">https://your-site.netlify.app/.netlify/functions/random</div>
-        <div class="example-url">https://your-site.netlify.app/.netlify/functions/random?category=teachers</div>
+        <section class="section">
+            <h2 class="section-title">📋 Available Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <span class="category-icon">💪</span>
+                    <div class="category-name">Motivation</div>
+                    <div class="category-desc">Quotes to push you forward and inspire action</div>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon">👩‍🏫</span>
+                    <div class="category-name">Teachers</div>
+                    <div class="category-desc">Wisdom about teaching and education</div>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon">🎓</span>
+                    <div class="category-name">Students</div>
+                    <div class="category-desc">Learning and growth quotes for students</div>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon">📖</span>
+                    <div class="category-name">Education</div>
+                    <div class="category-desc">The power of knowledge and learning</div>
+                </div>
+                <div class="category-card">
+                    <span class="category-icon">✨</span>
+                    <div class="category-name">Inspiration</div>
+                    <div class="category-desc">Life-changing thoughts and perspectives</div>
+                </div>
+            </div>
+        </section>
 
-        <h3> Response Format</h3>
-        <div class="response-example">{
+        <section class="section">
+            <h2 class="section-title">🚀 API Usage</h2>
+            <div class="api-section">
+                <div class="endpoint-group">
+                    <div class="endpoint-title">Get Random Quote (Any Category)</div>
+                    <div class="endpoint" onclick="copyToClipboard('GET /.netlify/functions/random')">GET /.netlify/functions/random</div>
+                </div>
+
+                <div class="endpoint-group">
+                    <div class="endpoint-title">Get Random Quote by Category</div>
+                    <div class="endpoint" onclick="copyToClipboard('GET /.netlify/functions/random?category=motivation')">GET /.netlify/functions/random?category=motivation</div>
+                </div>
+
+                <div class="endpoint-group">
+                    <div class="endpoint-title">Example URLs</div>
+                    <div class="code-block url">
+                        <button class="copy-btn" onclick="copyUrl1()">Copy</button>
+                        https://benedictocollege-quote-api.netlify.app/.netlify/functions/random
+                    </div>
+                    <div class="code-block url">
+                        <button class="copy-btn" onclick="copyUrl2()">Copy</button>
+                        https://benedictocollege-quote-api.netlify.app/.netlify/functions/random?category=teachers
+                    </div>
+                </div>
+
+                <div class="endpoint-group">
+                    <div class="endpoint-title">Response Format</div>
+                    <div class="code-block json">
+                        <button class="copy-btn" onclick="copyJsonResponse()">Copy</button>
+{
   "quote": "Teaching is the profession that creates all others.",
   "author": "Unknown",
   "category": "teachers"
-}</div>
+}
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <h2>🎮 Live Demo</h2>
-        <div class="demo-section">
-            <p>Try the API right here:</p>
-            <button onclick="fetchRandomQuote()">Get Random Quote</button>
-            <button onclick="fetchQuoteByCategory('motivation')">Motivation Quote</button>
-            <button onclick="fetchQuoteByCategory('teachers')">Teachers Quote</button>
-            <button onclick="fetchQuoteByCategory('students')">Students Quote</button>
-            <button onclick="fetchQuoteByCategory('education')">Education Quote</button>
-            <button onclick="fetchQuoteByCategory('inspiration')">Inspiration Quote</button>
-            
-            <div id="demo-result">Click a button above to fetch a quote!</div>
-        </div>
+        <section class="section">
+            <h2 class="section-title">Live Demo</h2>
+            <div class="demo-section">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">Try the API right here:</p>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.875rem;">
+                    <strong>Note:</strong> If the API is not yet deployed, demo data will be shown instead.
+                </p>
+                <div class="demo-buttons">
+                    <button class="btn" onclick="fetchRandomQuote()">Random Quote</button>
+                    <button class="btn btn-secondary" onclick="fetchQuoteByCategory('motivation')">Motivation</button>
+                    <button class="btn btn-secondary" onclick="fetchQuoteByCategory('teachers')">Teachers</button>
+                    <button class="btn btn-secondary" onclick="fetchQuoteByCategory('students')">Students</button>
+                    <button class="btn btn-secondary" onclick="fetchQuoteByCategory('education')">Education</button>
+                    <button class="btn btn-secondary" onclick="fetchQuoteByCategory('inspiration')">Inspiration</button>
+                </div>
 
-        <h2> Error Handling</h2>
-        <p>Invalid category requests return a 400 status with available categories:</p>
-        <div class="response-example">{
+                <div id="demo-result">Click a button above to fetch a quote!</div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Error Handling</h2>
+            <div class="api-section">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">Invalid category requests return a 400 status with available categories:</p>
+                <div class="code-block json">
+                    <button class="copy-btn" onclick="copyErrorResponse()">Copy</button>
+{
   "error": "Invalid category. Available categories: motivation, teachers, students, education, inspiration",
   "availableCategories": ["motivation", "teachers", "students", "education", "inspiration"]
-}</div>
+}
+                </div>
+            </div>
+        </section>
 
-        <div class="footer">
-            <p> Built for Benedicto College | Free to use | No API key required</p>
-            <p>Made with ❤️ using Netlify Functions</p>
-        </div>
+        <footer class="footer">
+            <p>Built for Benedicto College | Free to use | No API key required</p>
+            <p>Made by Nathaniel Inocando ❤️</p>
+        </footer>
     </div>
 
     <script>
+        // Mock data for demo purposes when API is not deployed
+        const mockQuotes = {
+            motivation: [
+                { quote: "Push yourself, because no one else will.", author: "Unknown", category: "motivation" },
+                { quote: "Great things never come from comfort zones.", author: "Unknown", category: "motivation" },
+                { quote: "Dream it. Wish it. Do it.", author: "Unknown", category: "motivation" }
+            ],
+            teachers: [
+                { quote: "Teaching is the profession that creates all others.", author: "Unknown", category: "teachers" },
+                { quote: "A good teacher can inspire hope, ignite the imagination, and instill a love of learning.", author: "Brad Henry", category: "teachers" }
+            ],
+            students: [
+                { quote: "Every student can learn, just not on the same day, or the same way.", author: "George Evans", category: "students" },
+                { quote: "The beautiful thing about learning is that no one can take it away from you.", author: "B.B. King", category: "students" }
+            ],
+            education: [
+                { quote: "Education is the foundation upon which we build our future.", author: "Christine Gregoire", category: "education" },
+                { quote: "The function of education is to teach one to think intensively and to think critically.", author: "Martin Luther King Jr.", category: "education" }
+            ],
+            inspiration: [
+                { quote: "The only way to do great work is to love what you do.", author: "Steve Jobs", category: "inspiration" },
+                { quote: "Life is what happens to you while you're busy making other plans.", author: "John Lennon", category: "inspiration" }
+            ]
+        };
+
+        function getRandomQuote(category = null) {
+            if (category && mockQuotes[category]) {
+                const quotes = mockQuotes[category];
+                return quotes[Math.floor(Math.random() * quotes.length)];
+            } else {
+                // Get random quote from any category
+                const allCategories = Object.keys(mockQuotes);
+                const randomCategory = allCategories[Math.floor(Math.random() * allCategories.length)];
+                const quotes = mockQuotes[randomCategory];
+                return quotes[Math.floor(Math.random() * quotes.length)];
+            }
+        }
+
         async function fetchRandomQuote() {
             const resultDiv = document.getElementById('demo-result');
             resultDiv.textContent = 'Loading...';
-            
+            resultDiv.className = 'loading';
+
             try {
                 const response = await fetch('/.netlify/functions/random');
-                const data = await response.json();
-                
+
                 if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.className = 'success';
                     resultDiv.textContent = JSON.stringify(data, null, 2);
                 } else {
-                    resultDiv.textContent = `Error: ${JSON.stringify(data, null, 2)}`;
+                    throw new Error('API not available');
                 }
             } catch (error) {
-                resultDiv.textContent = `Network Error: ${error.message}`;
+                // Fallback to mock data
+                resultDiv.className = 'success';
+                const mockQuote = getRandomQuote();
+                resultDiv.textContent = JSON.stringify(mockQuote, null, 2) + '\n\n// Note: Using demo data. Deploy the Netlify function for live API.';
             }
         }
-        
+
         async function fetchQuoteByCategory(category) {
             const resultDiv = document.getElementById('demo-result');
             resultDiv.textContent = 'Loading...';
-            
+            resultDiv.className = 'loading';
+
             try {
                 const response = await fetch(`/.netlify/functions/random?category=${category}`);
-                const data = await response.json();
-                
+
                 if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.className = 'success';
                     resultDiv.textContent = JSON.stringify(data, null, 2);
                 } else {
-                    resultDiv.textContent = `Error: ${JSON.stringify(data, null, 2)}`;
+                    throw new Error('API not available');
                 }
             } catch (error) {
-                resultDiv.textContent = `Network Error: ${error.message}`;
+                // Fallback to mock data
+                resultDiv.className = 'success';
+                const mockQuote = getRandomQuote(category);
+                resultDiv.textContent = JSON.stringify(mockQuote, null, 2) + '\n\n// Note: Using demo data. Deploy the Netlify function for live API.';
             }
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.style.color = 'var(--accent-success)';
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.color = '';
+                }, 1000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+
+        function copyUrl1() {
+            copyToClipboard('https://benedictocollege-quote-api.netlify.app/.netlify/functions/random', event.target);
+        }
+
+        function copyUrl2() {
+            copyToClipboard('https://benedictocollege-quote-api.netlify.app/.netlify/functions/random?category=teachers', event.target);
+        }
+
+        function copyJsonResponse() {
+            const jsonText = `{
+  "quote": "Teaching is the profession that creates all others.",
+  "author": "Unknown",
+  "category": "teachers"
+}`;
+            copyToClipboard(jsonText, event.target);
+        }
+
+        function copyErrorResponse() {
+            const errorText = `{
+  "error": "Invalid category. Available categories: motivation, teachers, students, education, inspiration",
+  "availableCategories": ["motivation", "teachers", "students", "education", "inspiration"]
+}`;
+            copyToClipboard(errorText, event.target);
+        }
+
+  
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        target.textContent = '0';
+
+                        if (finalValue.includes('+')) {
+                            const num = parseInt(finalValue);
+                            animateNumber(target, 0, num, finalValue.replace(num, ''));
+                        } else if (finalValue.includes('%')) {
+                            const num = parseInt(finalValue);
+                            animateNumber(target, 0, num, '%');
+                        } else {
+                            animateNumber(target, 0, parseInt(finalValue), '');
+                        }
+                    }
+                });
+            });
+
+            stats.forEach(stat => observer.observe(stat));
+        });
+
+        function animateNumber(element, start, end, suffix) {
+            const duration = 1000;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (end - start) * progress);
+
+                element.textContent = current + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            requestAnimationFrame(update);
         }
     </script>
 </body>
